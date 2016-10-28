@@ -1,0 +1,119 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+struct Room
+{
+	float width;
+	float length;
+	string name;
+
+	float GetArea()
+	{
+		float area = (width * length);
+		return area;
+	}
+
+	float GetPerimeter()
+	{
+		float perimeter = (2* length + 2 * width);
+		return perimeter;
+	}
+};
+
+struct Building
+{
+	string address;
+	Room rooms[10];
+	int totalRooms;
+
+	Building()
+	{
+		address = "not set";
+		totalRooms = 0;
+	}
+
+	void AddRoom(string newName, float newWidth, float newLength)
+	{
+		Room newRoom;
+		newRoom.width = newWidth;
+		newRoom.length = newLength;
+		newRoom.name = newName;
+
+		rooms[totalRooms] = newRoom;
+		totalRooms++;
+	}
+};
+
+int main()
+{
+	Building bldg;
+
+	bool done = false;
+
+	while (!done)
+	{
+		cout << endl;
+		cout << "1. Set Building address" << endl;
+		cout << "2. Add room" << endl;
+		cout << "3. View all building information" << endl;
+		cout << "4. Quit" << endl;
+		cout << endl;
+
+		int choice;
+		cin >> choice;
+		cin.ignore();
+
+		if (choice == 1)
+		{
+			cout << endl;
+			cout << "What is the building address? ";
+			getline(cin, bldg.address);
+		}
+		else if (choice == 2)
+		{
+			string roomName;
+			float width;
+			float length;
+
+			cout << endl;
+			cout << "\nWhat is the name of the room? ";
+			getline(cin, roomName);
+			
+			cout << "\nWhat is the room width? ";
+			cin >> width;
+
+			cout << "\nWhat is the room length? ";
+			cout << endl;
+			cin >> length;
+			cin.ignore();
+
+			bldg.AddRoom(roomName, width, length);
+		}
+		else if (choice == 3)
+		{
+			cout << bldg.address << endl;
+			cout << "Rooms: " << bldg.totalRooms << endl;
+			cout << "Room Information: " << endl;
+
+			for (int i = 0; i < bldg.totalRooms; i++)
+			{
+				cout << endl;
+				cout << "Your Building: " << endl;
+				cout << "Name: " << bldg.rooms[i].name << endl;
+				cout << "Width: " << bldg.rooms[i].width << endl;
+				cout << "Length: " << bldg.rooms[i].length << endl;
+				cout << "Area: " << bldg.rooms[i].GetArea() << endl;
+				cout << "Perimeter: " << bldg.rooms[i].GetPerimeter() << endl;
+				cout << endl;
+			}
+		}
+		else if (choice == 4)
+		{
+			done = true;
+		}
+	}
+
+	return 0;
+}
